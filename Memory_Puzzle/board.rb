@@ -28,31 +28,24 @@ class Board
     end
 
     def populate #[a, c, c, a, d]
-      cards = Array.new(@pairs){Card.new(false)}
-      (0...cards.length).each do |i|
-          if cards[i].face == cards[i+1..-1].face
-            cards[i]=Card.new(false)
-            while cards[i].face ==
-          end
-        # cards = Array.new(@pairs){Card.new(false)}
+     
+        cards = Array.new(@pairs){Card.new(false)}
 
+        cards.map! do |card|
+            # debugger
+            count_same_face = -1
 
-
-        # cards.map! do |card|
-        #     # debugger
-        #     count_same_face = -1
-
-        #     (0...cards.length).each {|i| count_same_face+=1 if card.face == cards[i].face}
+            (0...cards.length).each {|i| count_same_face+=1 if card.face == cards[i].face}
               
             
-        #     while count_same_face>1
-        #       card = Card.new(false)
-        #       count_same_face = -1
-        #       (0...cards.length).each {|i| count_same_face+=1 if card.face == cards[i].face}
-        #     end
-        #     # debugger
-        #       card
-        # end    
+            while count_same_face>1
+              card = Card.new(false)
+              count_same_face = -1
+              (0...cards.length).each {|i| count_same_face+=1 if card.face == cards[i].face}
+            end
+            # debugger
+              card
+        end    
 
       
         row = rand(0...@board.length)
@@ -71,15 +64,7 @@ class Board
             
         end  
         
-        #make @pairs num of cards
-        #puts the cards in the board randomly
-        #do it again until there are 2 of each card
 
-        #while the count of pairs is not @pairs 
-            #loop and find values for row and col
-                #if not empty roll again, if empty fill
-                #repeat for the same value
-        
         
     end
 
