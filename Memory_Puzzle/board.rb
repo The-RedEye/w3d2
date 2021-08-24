@@ -7,7 +7,7 @@ class Board
     def initialize(n = 4)
         # @card = Card.new
         # debugger
-        @board = Array.new(n){Array.new(n) {:X}}
+        @board = Array.new(n){Array.new(n) {Card.new(true)}}
         @size = n * n
         @pairs = @size / 2
     end
@@ -27,18 +27,32 @@ class Board
         
     end
 
-    def populate
-        cards = Array.new(@pairs)
-        (0...cards.length).each do |card|
-            # debugger
-            temp = Card.new
-            while cards[card] == temp
-                # debugger
-                temp = Card.new
-            end
-            # debugger
-            cards[card] = temp
-        end    
+    def populate #[a, c, c, a, d]
+      cards = Array.new(@pairs){Card.new(false)}
+      (0...cards.length).each do |i|
+          if cards[i].face == cards[i+1..-1].face
+            cards[i]=Card.new(false)
+            while cards[i].face ==
+          end
+        # cards = Array.new(@pairs){Card.new(false)}
+
+
+
+        # cards.map! do |card|
+        #     # debugger
+        #     count_same_face = -1
+
+        #     (0...cards.length).each {|i| count_same_face+=1 if card.face == cards[i].face}
+              
+            
+        #     while count_same_face>1
+        #       card = Card.new(false)
+        #       count_same_face = -1
+        #       (0...cards.length).each {|i| count_same_face+=1 if card.face == cards[i].face}
+        #     end
+        #     # debugger
+        #       card
+        # end    
 
       
         row = rand(0...@board.length)
@@ -76,12 +90,8 @@ class Board
             row = rand(0...@board.length)
             col = rand(0...@board.length)
             position = [row, col]
-            # while @board[position] 
-            # p position
-            # p @board[position]
-            # debugger
-            p self[position]
-            if self[position] == :X                
+                       
+            if self[position] == Card.new(true)               
                 return position
             end
         # end
@@ -89,6 +99,20 @@ class Board
     end
 
     def render
+      puts "    #{ (0...@board.length).to_a.join(" ") }"
+      @board.each_with_index do  |row, idx|
+        
+        arr = row.map do |card|
+          if card.face_up
+            card.face
+          else
+            '-'
+          end
+        end
+        arr =arr.join(" ") 
+        p "#{ idx}  #{arr}"
+
+      end
 
     end
 
@@ -105,7 +129,4 @@ class Board
     end
 end
 
-b= Board.new
-b.populate
-p b
 

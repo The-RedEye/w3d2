@@ -1,10 +1,14 @@
 class Card
 
-    attr_reader :face
+    attr_reader :face, :face_up
 
-    def initialize
+    def initialize(is_empty = true)
+      if is_empty
+        @face = '0'
+      else
         @face = ("A".."Z").to_a.sample
-        @face_up = true
+      end
+        @face_up = false
     end
 
 
@@ -25,9 +29,7 @@ class Card
     end
 
     def ==(other_card)
-        p self
-        p other_card
-        @face == other_card.face
+      @face == other_card.face
     end
 
 end
