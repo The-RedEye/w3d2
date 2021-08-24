@@ -1,16 +1,17 @@
 class Card
 
+    attr_reader :face
 
     def initialize
-        @face
+        @face = ("A".."Z").to_a.sample
         @face_up = true
     end
+
 
     def hide
         if @face_up == true
             @face_up = false
         end
-
     end
 
     def reveal
@@ -23,8 +24,10 @@ class Card
 
     end
 
-    def ==
-
+    def ==(other_card)
+        p self
+        p other_card
+        @face == other_card.face
     end
 
 end

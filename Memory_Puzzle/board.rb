@@ -1,54 +1,61 @@
-require_relative "card.rb"
+require_relative "./card.rb"
+require "byebug"
 
 class Board 
+    attr_reader :cards, :board
 
     def initialize(n = 4)
-        @card = Card.new
+        # @card = Card.new
+        # debugger
         @board = Array.new(n){Array.new(n) {:X}}
         @size = n * n
         @pairs = @size / 2
     end
 
     def [] (position)
-      row , col = position
+        # debugger
+      row = position[0]
+      col = position[1]
       @board[row][col]
 
     end
 
     def []= (position, value)
-      row , col = position
-      @board[row][col] = value
-
+        # debugger
+        row , col = position
+        @board[row][col] = value
+        
     end
 
     def populate
+        cards = Array.new(@pairs)
+        (0...cards.length).each do |card|
+            # debugger
+            temp = Card.new
+            while cards[card] == temp
+                # debugger
+                temp = Card.new
+            end
+            # debugger
+            cards[card] = temp
+        end    
 
-      count = 0
-
-      while (count<@pairs)
-        row = (0...@board.length).sample  #gets initial position, may/maynot be taken
-        col = (0...@board.length).sample
+      
+        row = rand(0...@board.length)
+        col = rand(0...@board.length)
         position = [row, col]
-        card_count = 0
-        card = 'A' #Card.new()
-
-        while card_count<=2
-
-          while self[positon] != :X       #rolls until position is not taken
-            row = (0...@board.length).sample
-            col = (0...@board.length).sample
-            position = [row, col]
-          end   
-
-          self[positon] = card   # places first pair
-          card_count+=1
-        end
-
-   
-
-
-
-      end
+        
+        cards.each do |card|
+            2.times do
+                # debugger
+                position = self.find_empty
+                # debugger
+                self[position] = card # places first pair     
+                
+                # card_count+=1
+            end
+            
+        end  
         
         #make @pairs num of cards
         #puts the cards in the board randomly
@@ -62,4 +69,43 @@ class Board
         
     end
 
+    def find_empty
+        #give array or empty positions
+        #iterate through the board
+        while true
+            row = rand(0...@board.length)
+            col = rand(0...@board.length)
+            position = [row, col]
+            # while @board[position] 
+            # p position
+            # p @board[position]
+            # debugger
+            p self[position]
+            if self[position] == :X                
+                return position
+            end
+        # end
+        end
+    end
+
+    def render
+
+    end
+
+    def won?
+
+    end
+
+    def reveal
+
+    end
+
+    def guess_pos
+
+    end
 end
+
+b= Board.new
+b.populate
+p b
+
